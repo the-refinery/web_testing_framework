@@ -1,1 +1,1 @@
-puts "Success"
+require 'system/classes/Page.rb'
