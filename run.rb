@@ -1,1 +1,1 @@
-require 'system/classes/Page.rb'
+require_relative 'system/classes/Page.rb'
