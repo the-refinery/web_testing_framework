@@ -5,7 +5,7 @@ class Page
     @base_url = url_sections[0] + "//" + url_sections[2]
     @path = ""
     url_sections.drop(3).each do |section|
-      @path = @path.to_s + "/" + section.to_s
+      @path.concat("/" + section)
     end
   end
   
