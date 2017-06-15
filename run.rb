@@ -1,0 +1,1 @@
+require 'system/classes/Page.rb'
