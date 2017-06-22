@@ -1,4 +1,4 @@
-require 'net/http'
+require 'open-uri'
 class Page
   def initialize(url)
     url_sections = url.split("/")
@@ -10,6 +10,7 @@ class Page
     url_sections.drop(3).each do |section|
       @path.concat("/" + section)
     end
+    @html = open(@protocol + "//" + @base_url + @path).read
   end
   
   def to_s
