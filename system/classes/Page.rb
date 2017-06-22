@@ -36,6 +36,13 @@ class Page
    str
   end
   
+  def extract_links
+    @hyperlink = []
+    if (has_tag? "a")
+      
+    end
+  end
+  
   def has_tag? tag
     in_comment = false
     checking_for_tag = false
