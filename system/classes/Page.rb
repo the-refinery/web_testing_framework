@@ -24,7 +24,6 @@ class Page
        <a href='http://www.facebook.com'>Fourth Link</a>
       </body>
      </html>"
-    @hyperlinks = []
   end
   
   def to_s
@@ -38,6 +37,28 @@ class Page
   end
   
   def has_tag? tag
-    in_comment = false;
+    in_comment = false
+    checking_for_tag = false
+    tag_check_index = 0
+    # iterate through html characters
+    @html.length.times do |i|
+      # if entering or exiting a comment
+      if (i >= 3 && @html[i - 3] == '<' && @html[i - 2] == '!' && @html[i - 1] == '-' && @html[i] == '-')
+        in_comment = true
+      elsif (i >= 4 && @html[i - 2] == '-' && @html[i - 1] == '-' && @html[i] == '>')
+        in_comment = false
+      end
+      # check for initialization of tag
+      if (i > 0 && !in_comment && !checking_for_tag && @html[i - 1] == '<' && @html[i] == tag[0])
+        checking_for_tag = true
+        tag_check_index = 1;
+      end
+      if (checking_for_tag && tag_check_index < tag.length && @html[i] == tag[tag_check_index])
+        tag_check_index = tag_check_index + 1
+      elsif (tag_check_index == tag.length && (@html[i] == ' ' || @html[i] == '>'))
+        return true
+      end
+    end
+    false
   end
 end
