@@ -3,4 +3,7 @@ class Hyperlink
     @href = href
     @target = target
   end
+  def to_s
+    "Hyperlink(href: " + @href + ",target: " + @target + ")"
+  end
 end
