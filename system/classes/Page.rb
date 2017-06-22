@@ -1,4 +1,5 @@
 require 'open-uri'
+require_relative "Hyperlink.rb"
 class Page
   def initialize(url)
     url_sections = url.split("/")
@@ -23,9 +24,16 @@ class Page
        <a href='http://www.facebook.com'>Fourth Link</a>
       </body>
      </html>"
+    @hyperlinks = []
   end
   
   def to_s
-   "Page(protocol: " + @protocol + ",base_url:" + @base_url.to_s + ",path:" + @path.to_s + ",html:" + @html.to_s + ")"
+   str = "Page(protocol: " + @protocol + ",base_url:" + @base_url.to_s + ",path:" + @path.to_s + ",html:" + @html.to_s + ",hyperlinks: ["
+   @hyperlinks.each do |link|
+     str = str + link.to_s
+     str += "," if (!link.equal?(@hyperlinks.last))
+   end
+   str += "])"
+   str
   end
 end
