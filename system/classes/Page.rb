@@ -36,4 +36,8 @@ class Page
    str += "])"
    str
   end
+  
+  def has_tag? tag
+    in_comment = false;
+  end
 end
