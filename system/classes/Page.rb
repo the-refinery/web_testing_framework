@@ -24,6 +24,7 @@ class Page
        <a href='http://www.facebook.com'>Fourth Link</a>
       </body>
      </html>"
+    extract_links
   end
   
   def to_s
@@ -37,7 +38,8 @@ class Page
   end
   
   def extract_links
-    @hyperlink = []
+    @hyperlinks = []
+    puts has_tag? "a"
     if (has_tag? "a")
       
     end
@@ -50,9 +52,9 @@ class Page
     # iterate through html characters
     @html.length.times do |i|
       # if entering or exiting a comment
-      if (i >= 3 && @html[i - 3] == '<' && @html[i - 2] == '!' && @html[i - 1] == '-' && @html[i] == '-')
+      if (beginning_of_comment? i, @html)
         in_comment = true
-      elsif (i >= 4 && @html[i - 2] == '-' && @html[i - 1] == '-' && @html[i] == '>')
+      elsif (end_of_comment? i, @html)
         in_comment = false
       end
       # check for initialization of tag
@@ -67,5 +69,15 @@ class Page
       end
     end
     false
+  end
+  
+  private
+  
+  def beginning_of_comment? i, html
+    i >= 3 && html[i - 3] == '<' && html[i - 2] == '!' && html[i - 1] == '-' && html[i] == '-'
+  end
+  
+  def end_of_comment? i, html
+    i >= 4 && html[i - 2] == '-' && html[i - 1] == '-' && html[i] == '>'
   end
 end
