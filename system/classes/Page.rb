@@ -13,7 +13,7 @@ class Page
       @path.concat("/" + section)
     end
     @html = open(@protocol + "//" + @base_url + @path).read
-    extract_links
+    @hyperlinks = []
   end
   
   def to_s
