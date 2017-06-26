@@ -1,4 +1,5 @@
 require 'open-uri'
+require 'nokogiri'
 require_relative "Hyperlink.rb"
 class Page
   def initialize(url)
