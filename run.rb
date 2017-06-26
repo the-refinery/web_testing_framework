@@ -1,5 +1,6 @@
 require 'open-uri'
-require 'nokogiri'
+require 'colorize'
+require 'mechanize'
 require_relative 'system/classes/Hyperlink.rb'
 
 class Site
@@ -7,6 +8,29 @@ class Site
     @domain = domain
     @hyperlinks = []
   end
+  
+  def extract_links
+    @hyperlinks = []
+    @agent = Mechanize.new
+    puts "Extracting Links"
+    puts ""
+    get_new_links @domain
+  end
+  
+  private
+  
+  def get_new_links site_page
+    @agent.get(site_page)
+    links = @agent.page.search('a')
+    links.each do |link|
+      puts link.attr('href')
+    end
+  end
+  
+  def contains_hyperlink? link
+    
+  end
 end
 
 site = Site.new 'http://oec.staging.t-r.io'
+site.extract_links
