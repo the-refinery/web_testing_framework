@@ -9,6 +9,4 @@ class Site
   end
 end
 
-site = 'http://oec.staging.t-r.io'
-html = open(site).read
-document = Nokogiri::HTML(html)
+site = Site.new 'http://oec.staging.t-r.io'
