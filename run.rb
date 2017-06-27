@@ -26,8 +26,17 @@ class Site
     @agent.get(site_page)
     links = @agent.page.search('a')
     links.each do |link|
-      puts link.attr('href')
+      #puts link.attr('href'))
+      new_link = Hyperlink.new link.attr('href').to_s, link.attr('target').to_s
+      if (!contains_hyperlink? new_link)
+        @hyperlinks.push new_link #Hyperlink.new link.attr('href').to_s, link.attr('target').to_s
+      end
+      #puts @hyperlinks.last.href.to_s
     end
+    @hyperlinks.each do |link|
+      puts link.href
+    end
+    puts @hyperlinks.length
   end
   
   def contains_hyperlink? link
