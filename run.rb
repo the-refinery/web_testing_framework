@@ -6,7 +6,10 @@ require_relative 'system/classes/Hyperlink.rb'
 class Site
   def initialize(domain)
     @domain = domain
-    @hyperlinks = []
+    @hyperlinks = [
+     Hyperlink.new('../', '_target'),
+     Hyperlink.new('../../', '_window')
+    ]
   end
   
   def extract_links
@@ -28,7 +31,10 @@ class Site
   end
   
   def contains_hyperlink? link
-    
+    @hyperlinks.each do |hyperlink|
+      return true if link.equal? hyperlink
+    end
+    false
   end
 end
 
