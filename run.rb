@@ -19,6 +19,7 @@ class Site
     @agent = Mechanize.new
     puts "Extracting Links"
     puts ""
+    puts @domain.cyan
     get_new_links @domain
   end
   
@@ -39,7 +40,13 @@ class Site
     sort_hyperlinks
     check_as_analyzed site_page
     @hyperlinks.length.times do |i|
-      puts @hyperlinks[i].href + " -- " + @links_analyzed[i].to_s.magenta
+      print @hyperlinks[i].href + " -- "
+      if (@links_analyzed[i])
+        print @links_analyzed[i].to_s.green
+      else
+        print @links_analyzed[i].to_s.red
+      end
+      print "\n"
     end
   end
   
