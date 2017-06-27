@@ -6,10 +6,7 @@ require_relative 'system/classes/Hyperlink.rb'
 class Site
   def initialize(domain)
     @domain = domain
-    @hyperlinks = [
-     Hyperlink.new('../', '_target'),
-     Hyperlink.new('../../', '_window')
-    ]
+    @hyperlinks = []
   end
   
   def domain
