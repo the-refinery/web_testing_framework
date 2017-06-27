@@ -7,6 +7,7 @@ class Site
   def initialize(domain)
     @domain = domain
     @hyperlinks = []
+    @links_analyzed = []
   end
   
   def domain
@@ -32,11 +33,13 @@ class Site
       new_link = Hyperlink.new href, link.attr('target').to_s
       if (!contains_hyperlink? new_link)
         @hyperlinks.push new_link
+        @links_analyzed.push false
       end
     end
     sort_hyperlinks
-    @hyperlinks.each do |link|
-      puts link.href
+    check_as_analyzed site_page
+    @hyperlinks.length.times do |i|
+      puts @hyperlinks[i].href + " -- " + @links_analyzed[i].to_s.magenta
     end
   end
   
@@ -48,13 +51,25 @@ class Site
   end
   
   def sort_hyperlinks
-    (0...@hyperlinks.length).each do |i|
+    @hyperlinks.length.times do |i|
       ((i + 1)...@hyperlinks.length).each do |j|
         if (@hyperlinks[j].href < @hyperlinks[i].href)
-          temp = @hyperlinks[i]
+          temp_hyperlink = @hyperlinks[i]
+          temp_analyzed = @links_analyzed[i]
           @hyperlinks[i] = @hyperlinks[j]
-          @hyperlinks[j] = temp
+          @hyperlinks[j] = temp_hyperlink
+          @links_analyzed[i] = @links_analyzed[j]
+          @links_analyzed[j] = temp_analyzed
         end
+      end
+    end
+  end
+  
+  def check_as_analyzed page
+    @hyperlinks.length.times do |i|
+      if (@hyperlinks[i].href == page || @hyperlinks[i].href == page + '/')
+        @links_analyzed[i] = true
+        break
       end
     end
   end
