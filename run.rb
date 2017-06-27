@@ -12,6 +12,10 @@ class Site
     ]
   end
   
+  def domain
+    @domain
+  end
+  
   def extract_links
     @hyperlinks = []
     @agent = Mechanize.new
@@ -57,5 +61,21 @@ class Site
   end
 end
 
-site = Site.new 'http://oec.staging.t-r.io'
-site.extract_links
+domain = "t-r.io"
+subdomains = ["oec.staging"]
+extra_security = false
+site_names = []
+subdomains.each do |d|
+  site_name = "http"
+  site_name = site_name + "s" if extra_security
+  site_name = site_name + "://" + d + "."
+  site_name = site_name + domain
+  site_names.push site_name
+end
+sites = []
+site_names.each do |site_name|
+  sites.push Site.new site_name
+end
+sites.each do |site|
+  site.extract_links
+end
