@@ -63,14 +63,17 @@ class Site
   end
 end
 
-domain = "t-r.io"
-subdomains = ["oec.staging"]
+#domain = "t-r.io"
+#subdomains = ["oec.staging"]
+domain = "duckbrand.com"
+subdomains = [""]
 extra_security = false
 site_names = []
 subdomains.each do |d|
   site_name = "http"
   site_name = site_name + "s" if extra_security
-  site_name = site_name + "://" + d + "."
+  site_name = site_name + "://"
+  site_name = site_name + d + "." if d.length > 0
   site_name = site_name + domain
   site_names.push site_name
 end
