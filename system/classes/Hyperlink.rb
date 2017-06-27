@@ -1,4 +1,7 @@
 class Hyperlink
+  @@HREF = 0
+  @@TARGET = 1
+  
   def initialize(href, target)
     @href = href
     @target = target
@@ -14,6 +17,14 @@ class Hyperlink
   
   def target
     @target
+  end
+  
+  def self.HREF
+    @@HREF
+  end
+  
+  def self.TARGET
+    @@TARGET
   end
   
   def equal?(link)

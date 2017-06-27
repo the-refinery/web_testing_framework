@@ -26,17 +26,15 @@ class Site
     @agent.get(site_page)
     links = @agent.page.search('a')
     links.each do |link|
-      #puts link.attr('href'))
       new_link = Hyperlink.new link.attr('href').to_s, link.attr('target').to_s
       if (!contains_hyperlink? new_link)
-        @hyperlinks.push new_link #Hyperlink.new link.attr('href').to_s, link.attr('target').to_s
+        @hyperlinks.push new_link
       end
-      #puts @hyperlinks.last.href.to_s
     end
+    sort_hyperlinks
     @hyperlinks.each do |link|
       puts link.href
     end
-    puts @hyperlinks.length
   end
   
   def contains_hyperlink? link
@@ -44,6 +42,18 @@ class Site
       return true if link.equal? hyperlink
     end
     false
+  end
+  
+  def sort_hyperlinks
+    (0...@hyperlinks.length).each do |i|
+      ((i + 1)...@hyperlinks.length).each do |j|
+        if (@hyperlinks[j].href < @hyperlinks[i].href)
+          temp = @hyperlinks[i]
+          @hyperlinks[i] = @hyperlinks[j]
+          @hyperlinks[j] = temp
+        end
+      end
+    end
   end
 end
 
