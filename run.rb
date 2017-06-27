@@ -30,7 +30,9 @@ class Site
     @agent.get(site_page)
     links = @agent.page.search('a')
     links.each do |link|
-      new_link = Hyperlink.new link.attr('href').to_s, link.attr('target').to_s
+      href = link.attr('href')
+      href = @domain + href if href[0] == '/'
+      new_link = Hyperlink.new href, link.attr('target').to_s
       if (!contains_hyperlink? new_link)
         @hyperlinks.push new_link
       end
